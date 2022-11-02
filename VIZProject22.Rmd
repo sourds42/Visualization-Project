@@ -1,0 +1,177 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+---
+# A report based on India's Multidimensional Poverty Index based on 2015-16 MPI survey results
+
+## Name: Souradeep Das
+## Rollno: MDS202242
+## Subject: Visualization
+<br>
+<br>
+
+
+## Abstract:
+The report aims to compare the Multidimensional Poverty levels across various states in India and analyse various social indicators to understand the level of deprivation and causes of poverty in each state.
+
+<br>
+<br>
+
+## Introduction
+
+
+Over the last four decades,many techniques, procedures, theories and indices in Welfare Economics to understand,measure,analyze and compare the concepts of overall development and inequalities,poverty etc.The Multidimensional Poverty Index is basically a deprivation index, where we try to find people are deprived from some basic rights.MPI as a whole takes into account both the proportion of poor and intensity of poverty.HCR is the headcount ratio, which represents the proportion of poor in the society and “IPP” is the total deprivation in the region divided by the total number of poor in the region.After that I showed the percentage of people who are poor and deprived in Health,Education and Living Standards across various states.I tried to show that through indicators like Child Mortality Rate and Nutrition of Health Dimension,Years of Schooling and School Attendance of Education Dimension and finally cooking fuel,sanitation,drinking water,electricity, housing and assets of Living Standard dimension.Lastly how the percentage different dimensions like Health,Education and Living Standards contribute to the level of multidimensional poverty.It will be described in the pie-chart format.
+
+
+<br>
+
+## About the Dataset:
+
+
+I have collected the data from the Oxford Poverty and Human Development Index based on Sub-national Results MPI 2021 based on 2015-16 survey results.It contains files with data of all states levels in India,related to the MPI of the regions, Censored Headcount Region and Contributions of the regions to the poverty.
+<br>
+
+
+### The Variables used in the Project:
+
+
+#### MPI=Multidimensional Poverty Index
+#### HCR=Headcount Ratio
+#### IPP=Total Deprivation in the region divided by the total number of poor
+#### CMR=Child Mortality Rate
+#### NRT=Nutrition 
+#### YS=Years Of Schooling
+#### ATR=Attendance Of Education
+#### CF=Cooking fuel
+#### SNT=Sanitation
+#### DW=Drinking Water
+#### ELC=Electricty
+#### HS=Housing
+#### AS=Assets
+#### HTH=Health
+#### EDU=Education
+#### Living Standard= LVS
+<br>
+
+  
+## Analysis:
+<br>
+
+#### 1. The MPI scores across all states of India.
+<br>
+
+
+#### 2. The Headcount Ratio showing the percentage of population in Multidimensional Poverty across all states in India.
+<br>
+
+#### 3. The Intensity of Deprivation among the Poor across all States in India.
+<br>
+
+#### 4. The scenario of different dimensions like Health, Edcation and Living Standard of each state.
+<br>
+
+
+```{r, echo=FALSE}
+library(tidyverse)
+install.packages("ggplot2")
+library(ggplot2)
+```
+## Multidimensional Poverty Index across all States
+```{r,echo=FALSE}
+
+MPI=read.csv("ap.csv")
+View(MPI)
+MPI$row
+ggplot(MPI,aes(MPI,States,fill=MPI))+geom_col(color='black')
+
+```
+
+## Headcount Ratio:Percentage of Population in Multidimenisonal Poverty across all states
+```{r, echo=FALSE}
+ggplot(MPI,aes(HCR,States,fill=HCR))+geom_col(color='black')
+```
+
+## Intensity of deprivation of poverty among poor across all states  
+```{r, echo=FALSE}
+ggplot(MPI,aes(IPP,States,fill=IPP))+geom_col(color='black')
+```
+  
+
+
+```{r, echo=FALSE}
+MPI1=read.csv("MPI.csv")
+MPI1=read.csv("MPI.csv")
+#library(ggplot2)
+dfdata = data.frame(MPI1)
+dfdata1 =t(dfdata)
+rownames(dfdata1) <- colnames(dfdata)
+colnames(dfdata1) <- rownames(dfdata)
+dataframe2=as.data.frame(dfdata1)
+dataframe2
+dataframe2=dfdata1[1:10,]
+colnames(dataframe2)=dfdata$States
+dataframe2=as.data.frame(dataframe2)
+dataframe2$index=rownames(dataframe2)
+```
+
+
+## Percentage of people deprived in Health Dimension:Child Mortality and Nutrition
+
+```{r,echo=FALSE}
+ggplot(data=dataframe2[2:3,], aes(index,Gujarat,fill=Gujarat))+geom_col(color='black')+xlab("Child Mortality  and  Nutrition")+ylab("Percentage of Population deprived")+guides(fill=guide_legend(title="Health Dimension"))
+```
+
+
+## Percentage of people deprived in Education Dimension:Years Of Schooling and Attendance of Education
+
+
+```{r, echo=FALSE}
+ggplot(data=dataframe2[4:5,], aes(index,Gujarat,fill=Gujarat))+geom_col(color='black')+xlab("Years of Schooling and Attendance of Education")+ylab("Percentage of Population deprived")+guides(fill=guide_legend(title="Education Dimension"))
+```
+
+
+## Percentage of people deprived in Living Standard Dimension:Cooking fuel,Drinking Water,Housing,Assets,Santation
+
+
+```{r, echo=FALSE}
+ggplot(data=dataframe2[6:10,], aes(index,Gujarat,fill=Gujarat))+geom_col(color='black')+xlab("Cooking fuel,Drinking Water,Housing,Assets,Santation")+ylab("Percentage of Population deprived")+guides(fill=guide_legend(title="Living Standard Dimension"))
+```
+
+## Piechart showing the Contributions of Education,Health and Living Standards deprivations to the Multidimensional Poverty
+```{r, echo=FALSE}
+d=read.csv("C:/Users/Souradeep Das/Desktop/new.csv")
+dk=d[(d$Country=="India"),]
+dk1=dk[1,4:6]
+str(dk1)
+dataframe2=as.data.frame(dk1)
+dataframe2
+library(dplyr)
+df_t =t(dk)
+rownames(df_t) <- colnames(dk)
+colnames(df_t) <- rownames(dk)
+dk$States
+dataframe1=as.data.frame(df_t)
+d1=df_t[4:6,]
+colnames(d1)=dk$States
+d1=as.data.frame(d1)
+d1$index=rownames(d1)
+d1$Indicators=rownames(d1)
+A=ggplot(d1,aes(x='', y =Gujarat,fill=Indicators)) +
+  geom_col(color = "black") +
+  geom_text(aes(label=Gujarat),
+            position=position_stack(vjust = 0.5))+coord_polar(theta = "y") +
+  theme_void()+scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+ggtitle("Pie Chart showing contributions of different deprivations to MPI(in percentage)")+guides(fill=guide_legend(title=))
+A
+
+```
+
+# Summary of Analysis
+
+I have used the Multidimensional Poverty Index to capture the level of deprivations faced by the population below the poverty line in a particular region.It is an important measure since it helps to assess the factors that region is deprived in.I have compared the MPI scores across different states to get a clear picture of the most deprived regions in India.After that, I showed the percentage of people deprived in each of the dimensions of Health,Education and Living standards.The results are crucial for ascertaining the part of the population that needs more impetus to foster growth and development.Lastly, I showed the percentage of contributions of various indicators to the Multidimensional Poverty Index.This will help us to know which of the indicators are causing the deprivations in the regions so that they can be improved and reduce the level of poverty.
+
+# Conclusion
+
+Poverty remains as a major problem in almost all the countries across the world.Due to existence of poverty,people get deprived of their basic needs and their sufferings are endless.So Poverty Eradication is an important aspect for development and growth of the nations across the world.The first step of poverty eradication is measuring the poverty levels across various states and countries. Health,Education and Living Standards are the main areas where poor people mostly get deprived of.The measurement can be done by checking the deprivation of which areas lead to higher poverty levels and the percentage of people who are deprived in.The results can be used to improve those relevant areas so that it can help to uplift people out of poverty and deprivation. 
